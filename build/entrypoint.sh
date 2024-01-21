@@ -35,22 +35,24 @@ remote_version=$(/home/steam/steamcmd/steamcmd.sh \
   +quit | grep -A2 "public" | awk -F\" '/buildid/{print$4}')
 
 # Update
-echo "Current Version: ${current_version}"
-echo "Remote Version : ${remote_version}"
-if [ "${current_version}" -ne "${remote_version}" ]; then
-  echo "A new version is available."
-  echo "Start the update."
-  /home/steam/steamcmd/steamcmd.sh \
-    +force_install_dir /home/steam/palworld/ \
-    +login anonymous \
-    +app_update 2394010 \
-    validate \
-    +quit > /dev/null
-  echo "The update is complete."
-  echo "Restarting..."
-  kill -SIGINT "$(cat /home/steam/palworld.pid)"
-  /home/steam/scripts/start.sh
-else
-  echo "There are no new versions."
-  sleep 10800
-fi
+while :; do
+  echo "Current Version: ${current_version}"
+  echo "Remote Version : ${remote_version}"
+  if [ "${current_version}" -ne "${remote_version}" ]; then
+    echo "A new version is available."
+    echo "Start the update."
+    /home/steam/steamcmd/steamcmd.sh \
+      +force_install_dir /home/steam/palworld/ \
+      +login anonymous \
+      +app_update 2394010 \
+      validate \
+      +quit > /dev/null
+    echo "The update is complete."
+    echo "Restarting..."
+    kill -SIGINT "$(cat /home/steam/palworld.pid)"
+    /home/steam/scripts/start.sh
+  else
+    echo "There are no new versions."
+    sleep 10800
+  fi
+end
