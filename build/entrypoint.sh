@@ -55,4 +55,4 @@ while :; do
     echo "There are no new versions."
     sleep 10800
   fi
-end
+done
