@@ -14,7 +14,9 @@ $SteamCMD \
 echo "Download Done!"
 
 # Settings.ini Copy
-if [ ! -s "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini" ]; then
+# The two blank lines of md5sum are: 68b329da9893e34099c7d8ad5cb9c940
+Settings_sum=$(md5sum "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini" | cut -d" " -f1)
+if [ "68b329da9893e34099c7d8ad5cb9c940" = "${Settings_sum}" ]; then
   echo "Init Settings.ini"
   \cp -f "${GameDir}/DefaultPalWorldSettings.ini" "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
 fi
