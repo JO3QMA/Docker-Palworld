@@ -1,0 +1,12 @@
+[Unit]
+    Description=Web container
+    Requires=docker.service
+    After=docker.service
+
+[Service]
+    Restart=always
+    ExecStart=/usr/bin/docker start -a pal
+    ExecStop=/usr/bin/docker stop -t 60 pal
+
+[Install]
+    WantedBy=default.target
