@@ -6,7 +6,7 @@ services:
     environment:
       TZ: Asia/Tokyo
     volumes:
-      - ./data/server:/home/steam/palworld
+      - ./data:/home/steam/palworld
     ports:
       - "8211:8211/udp"
       - "27015:27015"
