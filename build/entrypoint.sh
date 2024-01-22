@@ -14,7 +14,7 @@ $SteamCMD \
 echo "[Steam] Download Completed!"
 
 # Copy Settings.ini
-# The two blank lines of md5sum are: 68b329da9893e34099c7d8ad5cb9c940
+# The md5sum of two blank lines is: 68b329da9893e34099c7d8ad5cb9c940
 Settings_sum=$(md5sum "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini" | cut -d" " -f1)
 if [ "68b329da9893e34099c7d8ad5cb9c940" = "${Settings_sum}" ]; then
   echo "[PalServer] Initializing Settings.ini..."
