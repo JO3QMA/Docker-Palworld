@@ -1,8 +1,5 @@
-FROM cm2network/steamcmd
+FROM cm2network/steamcmd:latest
 ENV TZ=Asia/Tokyo
-
-RUN mkdir -p /home/steam/scripts
-COPY --chmod=755 entrypoint.sh /home/steam/scripts/
-COPY --chmod=755 start.sh /home/steam/scripts/
-
-ENTRYPOINT ["/bin/bash", "/home/steam/scripts/entrypoint.sh"]
+SHELL ["/bin/bash", "-c"]
+COPY --chmod=755 entrypoint.sh start.sh healthcheck.sh /home/steam/scripts/
+ENTRYPOINT ["/home/steam/scripts/entrypoint.sh"]
