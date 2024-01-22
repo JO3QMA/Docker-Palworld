@@ -3,59 +3,64 @@
 SteamCMD="/home/steam/steamcmd/steamcmd.sh"
 GameDir="/home/steam/palworld"
 
-# Download Palworld Data
-echo "Download Server Data..."
+# Download Palworld
+echo "[Steam] Downloading Palworld..."
 $SteamCMD \
   +force_install_dir ${GameDir} \
   +login anonymous \
   +app_update 2394010 \
   validate \
   +quit
-echo "Download Done!"
+echo "[Steam] Download Completed!"
 
-# Settings.ini Copy
+# Copy Settings.ini
 if [ ! -s "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini" ]; then
-  echo "Init Settings.ini"
-  \cp -f "${GameDir}/DefaultPalWorldSettings.ini" "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+  echo "[PalServer] Initializing Settings.ini..."
+  cp -f "${GameDir}/DefaultPalWorldSettings.ini" "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+  echo "[PalServer] Initialized Settings.ini!"
 fi
 
 # Start Pal Server
-echo "Start Server..."
 /home/steam/scripts/start.sh
 
-# Update
+# Ensure the Server is up to date
 while :; do
-  # Current Version
+  # Fetch Current Version
   current_version=$($SteamCMD \
     +force_install_dir ${GameDir} \
     +login anonymous \
     +app_status 2394010 \
-    +quit | awk '/BuildID/{print$8}')
+    +quit | \
+    awk '/BuildID/{print$8}'\
+  )
 
-  # Remove Version
+  # Fetch Remote Version
   remote_version=$($SteamCMD \
     +force_install_dir ${GameDir} \
     +login anonymous \
     +app_info_print 2394010 \
-    +quit | grep -A2 "public" | awk -F\" '/buildid/{print$4}')
+    +quit | \
+    grep -A2 "public" | \
+    awk -F\" '/buildid/{print$4}' \
+  )
 
-  echo "Current Version: ${current_version}"
-  echo "Remote Version : ${remote_version}"
+  echo "[Updater] Current Version: ${current_version}"
+  echo "[Updater] Remote Version : ${remote_version}"
   if [ "${current_version}" -ne "${remote_version}" ]; then
-    echo "A new version is available."
-    echo "Start the update."
+    echo "[Updater] A new version is available!"
+    echo "[Updater] Starting Update..."
     $SteamCMD \
       +force_install_dir ${GameDir} \
       +login anonymous \
       +app_update 2394010 \
       validate \
       +quit > /dev/null
-    echo "The update is complete."
-    echo "Restarting..."
+    echo "[Updater] Update completed!"
+    echo "[Updater] Restarting Server..."
     kill -SIGINT "$(cat /home/steam/palworld.pid)"
     /home/steam/scripts/start.sh
   else
-    echo "There are no new versions."
-    sleep 10800
+    echo "[Updater] There are no new versions."
+    sleep 3h
   fi
 done
