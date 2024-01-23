@@ -9,7 +9,8 @@ services:
       - ./data:/home/steam/palworld
     ports:
       - "8211:8211/udp"
-      - "27015:27015"
+      - "27015:27015/udp"
+      - "27015:27015/tcp"
     healthcheck:
       test: ["CMD-SHELL", "healthcheck.sh"]
       interval: 1m
