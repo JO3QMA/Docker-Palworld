@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-c"]
 RUN apt update && apt install -y --no-install-recommends \
       xdg-user-dirs \
       procps && \
-      apt clean \
+      apt clean && \
       rm -rf /var/lib/apt/lists/*
 USER steam
 COPY --chmod=755 ./*.sh /home/steam/scripts/
