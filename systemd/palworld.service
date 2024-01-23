@@ -1,12 +1,15 @@
 [Unit]
-    Description=Palworld dedicated server container.
-    Requires=docker.service
-    After=docker.service
+  Description=Palworld Dedicated Server
+  Requires=docker.service
+  After=docker.service
 
 [Service]
-    Restart=always
-    ExecStart=/usr/bin/docker start -a pal
-    ExecStop=/usr/bin/docker stop -t 60 pal
+  Type=simple
+  Restart=always
+  Environment=COMPOSE_DIR=/srv/docker-compose/palworld
+  ExecStart=/usr/local/bin/docker compose  -f ${DOCKER_DIR}/docker-compose.yml up
+  ExecStop=/usr/local/bin/docker compose   -f ${DOCKER_DIR}/docker-compose.yml down
+  ExecReload=/usr/local/bin/docker compose -f ${DOCKER_DIR}/docker-compose.yml restart
 
 [Install]
-    WantedBy=default.target
+  WantedBy=default.target
