@@ -15,11 +15,14 @@ echo "[Steam] Download Completed!"
 
 # Copy Settings.ini
 # The md5sum of two blank lines is: 68b329da9893e34099c7d8ad5cb9c940
-Settings_sum=$(md5sum "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini" | cut -d" " -f1)
-if [ "68b329da9893e34099c7d8ad5cb9c940" = "${Settings_sum}" ]; then
-  echo "[PalServer] Initializing Settings.ini..."
-  cp -f "${GameDir}/DefaultPalWorldSettings.ini" "${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
-  echo "[PalServer] Initialized Settings.ini!"
+setting_file_path="${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+setting_file_checksum=$(md5sum "${setting_file_path}" | cut -d" " -f1)
+if [ ! -e "${setting_file_path}" ] || [ "${setting_file_checksum}" = "68b329da9893e34099c7d8ad5cb9c940" ]; then
+  echo "[Init] Initializing Settings.ini..."
+  cp -f "${GameDir}/DefaultPalWorldSettings.ini" "${setting_file_path}"
+  echo "[Init] Initialized Settings.ini!"
+else
+  echo "[Init] Settings.ini does not need to be initialized."
 fi
 
 # Start Pal Server
