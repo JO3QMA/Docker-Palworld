@@ -7,9 +7,9 @@
   Type=simple
   Restart=always
   Environment=COMPOSE_DIR=/srv/docker-compose/palworld
-  ExecStart=/usr/local/bin/docker compose  -f ${DOCKER_DIR}/docker-compose.yml up
-  ExecStop=/usr/local/bin/docker compose   -f ${DOCKER_DIR}/docker-compose.yml down
-  ExecReload=/usr/local/bin/docker compose -f ${DOCKER_DIR}/docker-compose.yml restart
+  ExecStart=/usr/local/bin/docker compose  -f ${COMPOSE_DIR}/compose.yml up
+  ExecStop=/usr/local/bin/docker compose   -f ${COMPOSE_DIR}/compose.yml down
+  ExecReload=/usr/local/bin/docker compose -f ${COMPOSE_DIR}/compose.yml restart
 
 [Install]
   WantedBy=default.target
