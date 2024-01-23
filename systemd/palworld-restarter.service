@@ -1,0 +1,11 @@
+[Unit]
+  Description=Palworld Server Restarter
+  Requires=docker.service
+  After=docker.service
+
+[Service]
+  ExecStart=/usr/bin/systemctl try-restart palworld.service
+  Type=simple
+
+[Install]
+  WantedBy=default.target

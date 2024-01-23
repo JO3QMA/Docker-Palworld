@@ -1,0 +1,9 @@
+[Unit]
+  Description=Palworld Server Restart Timer
+
+[Timer]
+  OnCalendar=*-*-* 06,18:00:00
+  Rresistent=true
+
+[Install]
+  WantedBy=timers.target
