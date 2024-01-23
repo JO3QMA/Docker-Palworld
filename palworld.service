@@ -1,5 +1,5 @@
 [Unit]
-    Description=Web container
+    Description=Palworld dedicated server container.
     Requires=docker.service
     After=docker.service
 
