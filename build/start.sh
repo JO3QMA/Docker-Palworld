@@ -16,7 +16,7 @@ if [ -n "${PLAYERS}" ]; then
 fi
 
 if [ -n "${SERVER_NAME}" ]; then
-  SV_Arg+=" -servername=${SERVER_NAME}"
+  SV_Arg+=" -servername=\"${SERVER_NAME}\""
 fi
 
 if [ -n "${SERVER_PASS}" ]; then
