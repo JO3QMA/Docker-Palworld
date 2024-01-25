@@ -16,7 +16,6 @@ if [ "${UPDATE_BEFORE_STARTUP}" = true ]; then
   echo "[Steam] Update Completed!"
 fi
 
-
 # Copy Settings.ini
 # The md5sum of two blank lines is: 68b329da9893e34099c7d8ad5cb9c940
 setting_file_path="${GameDir}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
@@ -65,7 +64,8 @@ while :; do
       +quit > /dev/null
     echo "[Updater] Update completed!"
     echo "[Updater] Restarting Server..."
-    kill -SIGINT "$(cat /home/steam/palworld.pid)"
+    SV_PID=$(ps --no-header -o ppid --ppid "$(cat /home/steam/palworld.pid)" | xargs)
+    kill -SIGINT "${SV_PID}"
     /home/steam/scripts/start.sh
   else
     echo "[Updater] There are no new versions."
