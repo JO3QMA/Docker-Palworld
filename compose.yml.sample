@@ -5,6 +5,16 @@ services:
     restart: always
     environment:
       TZ: Asia/Tokyo
+      MULTITHREAD: TRUE
+      120FPS: TRUE
+      PORT: "8211"
+      PLAYERS: "32"
+      SERVER_NAME: ""
+      SERVER_PASS: ""
+      ADMIN_PASS: ""
+      COMMUNITY_SERVER: TRUE
+      PUBLIC_IP: ""
+      PUBLIC_PORT: ""
     volumes:
       - ./data:/home/steam/palworld
     ports:
