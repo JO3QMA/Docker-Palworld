@@ -1,17 +1,21 @@
 #!/bin/bash
 
+# Initialize
 SteamCMD="/home/steam/steamcmd/steamcmd.sh"
 GameDir="/home/steam/palworld"
 
-# Download Palworld
-echo "[Steam] Downloading Palworld..."
-$SteamCMD \
-  +force_install_dir ${GameDir} \
-  +login anonymous \
-  +app_update 2394010 \
-  validate \
-  +quit
-echo "[Steam] Download Completed!"
+# Update on startup
+if [ "${UPDATE_BEFORE_STARTUP}" = true ]; then
+  echo "[Steam] Downloading Palworld..."
+  $SteamCMD \
+    +force_install_dir ${GameDir} \
+    +login anonymous \
+    +app_update 2394010 \
+    validate \
+    +quit
+  echo "[Steam] Download Completed!"
+fi
+
 
 # Copy Settings.ini
 # The md5sum of two blank lines is: 68b329da9893e34099c7d8ad5cb9c940

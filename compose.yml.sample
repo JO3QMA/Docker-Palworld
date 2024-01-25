@@ -5,6 +5,7 @@ services:
     restart: always
     environment:
       TZ: Asia/Tokyo
+      UPDATE_BEFORE_STARTUP: TRUE
       MULTITHREAD: TRUE
       RUNNING_120FPS: TRUE
       PORT: "8211"
