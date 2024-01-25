@@ -64,7 +64,7 @@ while :; do
       +quit > /dev/null
     echo "[Updater] Update completed!"
     echo "[Updater] Restarting Server..."
-    SV_PID=$(ps --no-header -o ppid --ppid "$(cat /home/steam/palworld.pid)" | xargs)
+    SV_PID=$(ps --no-header -o pid --ppid "$(cat /home/steam/palworld.pid)" | xargs)
     kill -SIGINT "${SV_PID}"
     /home/steam/scripts/start.sh
   else
