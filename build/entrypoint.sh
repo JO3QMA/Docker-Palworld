@@ -1,17 +1,20 @@
 #!/bin/bash
 
+# Initialize
 SteamCMD="/home/steam/steamcmd/steamcmd.sh"
 GameDir="/home/steam/palworld"
 
-# Download Palworld
-echo "[Steam] Downloading Palworld..."
-$SteamCMD \
-  +force_install_dir ${GameDir} \
-  +login anonymous \
-  +app_update 2394010 \
-  validate \
-  +quit
-echo "[Steam] Download Completed!"
+# Update on startup
+if [ "${UPDATE_BEFORE_STARTUP}" = true ]; then
+  echo "[Steam] Updating Palworld..."
+  $SteamCMD \
+    +force_install_dir ${GameDir} \
+    +login anonymous \
+    +app_update 2394010 \
+    validate \
+    +quit
+  echo "[Steam] Update Completed!"
+fi
 
 # Copy Settings.ini
 # The md5sum of two blank lines is: 68b329da9893e34099c7d8ad5cb9c940
@@ -36,12 +39,11 @@ while :; do
     +login anonymous \
     +app_status 2394010 \
     +quit | \
-    awk '/BuildID/{print$8}'\
+    awk '/BuildID/{print$8}' \
   )
 
   # Fetch Remote Version
   remote_version=$($SteamCMD \
-    +force_install_dir ${GameDir} \
     +login anonymous \
     +app_info_print 2394010 \
     +quit | \
@@ -62,7 +64,8 @@ while :; do
       +quit > /dev/null
     echo "[Updater] Update completed!"
     echo "[Updater] Restarting Server..."
-    kill -SIGINT "$(cat /home/steam/palworld.pid)"
+    SV_PID=$(ps --no-header -o pid --ppid "$(cat /home/steam/palworld.pid)" | xargs)
+    kill -SIGINT "${SV_PID}"
     /home/steam/scripts/start.sh
   else
     echo "[Updater] There are no new versions."

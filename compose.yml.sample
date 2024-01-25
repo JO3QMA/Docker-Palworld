@@ -5,8 +5,9 @@ services:
     restart: always
     environment:
       TZ: Asia/Tokyo
+      UPDATE_BEFORE_STARTUP: TRUE
       MULTITHREAD: TRUE
-      120FPS: TRUE
+      RUNNING_120FPS: TRUE
       PORT: "8211"
       PLAYERS: "32"
       SERVER_NAME: ""
