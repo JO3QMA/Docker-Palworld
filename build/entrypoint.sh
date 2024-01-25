@@ -36,12 +36,11 @@ while :; do
     +login anonymous \
     +app_status 2394010 \
     +quit | \
-    awk '/BuildID/{print$8}'\
+    awk '/BuildID/{print$8}' \
   )
 
   # Fetch Remote Version
   remote_version=$($SteamCMD \
-    +force_install_dir ${GameDir} \
     +login anonymous \
     +app_info_print 2394010 \
     +quit | \
