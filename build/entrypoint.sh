@@ -6,14 +6,14 @@ GameDir="/home/steam/palworld"
 
 # Update on startup
 if [ "${UPDATE_BEFORE_STARTUP}" = true ]; then
-  echo "[Steam] Downloading Palworld..."
+  echo "[Steam] Updating Palworld..."
   $SteamCMD \
     +force_install_dir ${GameDir} \
     +login anonymous \
     +app_update 2394010 \
     validate \
     +quit
-  echo "[Steam] Download Completed!"
+  echo "[Steam] Update Completed!"
 fi
 
 
