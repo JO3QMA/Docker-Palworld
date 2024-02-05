@@ -3,7 +3,7 @@
 
 [Timer]
   OnCalendar=*-*-* 06,18:00:00
-  Rresistent=true
+  Persistent=true
 
 [Install]
   WantedBy=timers.target
