@@ -28,6 +28,9 @@ else
   echo "[Init] Settings.ini does not need to be initialized."
 fi
 
+# Engine.ini Edit
+/bin/bash /home/steam/scripts/edit_engine_ini.sh
+
 # Start Pal Server
 /home/steam/scripts/start.sh
 
