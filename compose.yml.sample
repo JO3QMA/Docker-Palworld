@@ -8,6 +8,7 @@ services:
       UPDATE_BEFORE_STARTUP: TRUE
       MULTITHREAD: TRUE
       TICKRATE: 60
+      OPTIMIZE: TRUE
       PORT: "8211"
       PLAYERS: "32"
       SERVER_NAME: ""

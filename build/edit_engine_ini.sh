@@ -12,6 +12,23 @@ if [ ! -f "${ENGINE_INI}" ]; then
   exit 0
 fi
 
-# [/Script/OnlineSubsystemUtils.IpNetDriver]
-## NetServerMaxTickRate
-crudini --set --format=ini "${ENGINE_INI}" "[/Script/OnlineSubsystemUtils.IpNetDriver]" "NetServerMaxTickRate" "${TICKRATE}"
+
+# Optimize other option
+if [ "${OPTIMIZE}" = true ]; then
+  # [/Script/OnlineSubsystemUtils.IpNetDriver]
+  crudini --set --format=ini "${ENGINE_INI}" "/Script/OnlineSubsystemUtils.IpNetDriver" "NetServerMaxTickRate" "${TICKRATE}"
+
+  # [/script/engine.player]
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.player" "ConfiguredInternetSpeed" "104857600"
+
+  # [/script/socketsubsystemepic.epicnetdriver]
+  crudini --set --format=ini "${ENGINE_INI}" "/script/socketsubsystemepic.epicnetdriver" "MaxClientRate" "104857600"
+
+  # [/script/engine.engine]
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "bSmoothFrameRate" "true"
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "bUseFixedFrameRate" "false"
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "SmoothedFrameRateRange" "(Type=Inclusive,Value=30.000000),UpperBound=(Type=Exclusive,Value=${TICKRATE}.000000))"
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "MinDesiredFrameRate" "60.000000"
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "FixedFrameRate" "${TICKRATE}.000000"
+  crudini --set --format=ini "${ENGINE_INI}" "/script/engine.engine" "NetClientTicksPerSecond" "${TICKRATE}"
+fi
